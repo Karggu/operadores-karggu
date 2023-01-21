@@ -1,0 +1,1 @@
+export const PATH_API = "http://localhost:9090"
