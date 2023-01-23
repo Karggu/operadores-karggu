@@ -22,18 +22,19 @@ export default function Login(){
     })
 
   const onSubmit = async data => {
-    // debugger
+    debugger
       console.log(data);
       setLoader(true)
       const route = await usefindRoute(data)
-      console.log('data login: ',data);
-      console.log('route login: ',route.data.vehicle.plates);
+      console.log('route: ',route);
+      // console.log('route.vehicle.plates', route.vehicle.plates);
+      // console.log('route.data.vehicle.plates', route.data.vehicle.plates);
       if(route.name === "AxiosError") {
         setNotFoundRoute(true)
         setLoader(false)
         return
       }
-      if(data.plates_vehicle !== route.data.vehicle.plates){
+      if(route.data === null || route.data.vehicle.plates !== data.plates_vehicle ){
           setNotFoundRoute(true)
           setLoader(false)
       } else {
