@@ -12,7 +12,13 @@ export default function Login(){
     const { register, formState: {errors}, handleSubmit } = useForm()
     const [notFoundRoute, setNotFoundRoute] = useState(false)
     const [loader, setLoader] = useState(false)
-
+    const [value, setValue] = useState("");
+    const onChange = e => {
+      const input = e.target.value;
+      if (/^[0-9a-f]+$/.test(input) || input === "") {
+          setValue(input);
+          }
+    };
 
     useEffect(()=> {
         if(auth.isAuthenticated()){
@@ -24,13 +30,14 @@ export default function Login(){
       console.log(data);
       setLoader(true)
       const route = await usefindRoute(data)
-      if(route.name === "AxiosError") {
+      const cookies = new Cookie()
+      if(route.name === "AxiosError" || cookies.get('auth_route') === null || cookies.get('auth_route') === undefined) {
+        cookies.remove('auth_route')
         setNotFoundRoute(true)
         setLoader(false)
         return
       }
       
-      const cookies = new Cookie()
       cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
       auth.login(() => {
         window.location = "/route"
@@ -63,7 +70,7 @@ export default function Login(){
                         height={50}
                       />
                     </div>
-                    <input type="text" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta'  {...register("id_route", {required: true})} aria-invalid={errors.id_route ? "true": "false"}/>
+                    <input type="text" value={value} onChange={onChange} minLength="24" maxLength="24" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta' aria-invalid={errors.id_route ? "true": "false"}/>
                     {errors.id_route?.type === 'required' && <p role="alert" className='text-red-500 text-sm'>ID de la Ruta obligatoria</p>}
                   </div>
                   <div className='relative my-4'>
@@ -79,7 +86,7 @@ export default function Login(){
                     {errors.plates_vehicle?.type === 'required' && <p role="alert" className='text-red-500 text-sm'>Placas del vehículo obligatorio</p>}
                   </div>
                   <div className='mb-5 flex flex-col items-center'>
-                    {notFoundRoute ? <p className='text-yellow-600 text-sm text-center mb-4'>No se encontró la ruta, verifica los datos ingresados.</p>: null}
+                    {notFoundRoute ? <p className='text-yellow-600 text-sm text-center mb-4'>No se encontró la ruta, verifica los datos ingresados.</p>: ""}
                     {loader ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> : <button type='submit' className='relative bg-red-500 rounded-full text-white font-bold text-center py-2 shadow-xl hover:bg-white hover:text-red-500 w-full'>Login</button>}
                     
                   </div>
