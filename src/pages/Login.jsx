@@ -14,15 +14,7 @@ export default function Login(){
     const [notFoundRoute, setNotFoundRoute] = useState(false)
     const [loader, setLoader] = useState(false)
     const navigate = useNavigate()
-
-    const [value, setValue] = useState("");
-    const onChange = e => {
-      const input = e.target.value;
-      if (/^[0-9a-f]+$/.test(input) || input === "") {
-          setValue(input);
-          }
-    };
-
+    
     useEffect(()=> {
         if(auth.isAuthenticated()){
           return navigate("/route")
@@ -30,20 +22,28 @@ export default function Login(){
     })
 
   const onSubmit = async data => {
+    // debugger
       console.log(data);
       setLoader(true)
       const route = await usefindRoute(data)
+      console.log('data login: ',data);
+      console.log('route login: ',route.data.vehicle.plates);
       if(route.name === "AxiosError") {
         setNotFoundRoute(true)
         setLoader(false)
         return
       }
+      if(data.plates_vehicle !== route.data.vehicle.plates){
+          setNotFoundRoute(true)
+          setLoader(false)
+      } else {
+          const cookies = new Cookie()
+          cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
+          auth.login(() => {
+            navigate("/route")
+          })
+      }
       
-      const cookies = new Cookie()
-      cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
-      auth.login(() => {
-        navigate("/route")
-      })
 
       setLoader(false)
   }
@@ -72,7 +72,7 @@ export default function Login(){
                         height={50}
                       />
                     </div>
-                    <input type="text" value={value} onChange={onChange} minLength="24" maxLength="24" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta' aria-invalid={errors.id_route ? "true": "false"}/>
+                    <input type="text" pattern='[a-f0-9]{24}' minLength="24" maxLength="24" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta' {...register("id_route",{required: true})} aria-invalid={errors.id_route ? "true": "false"}/>
                     {errors.id_route?.type === 'required' && <p role="alert" className='text-red-500 text-sm'>ID de la Ruta obligatoria</p>}
                   </div>
                   <div className='relative my-4'>
