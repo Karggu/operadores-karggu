@@ -6,17 +6,18 @@ import logoisokarggu from '../SVG/logoisokarggu.svg'
 import usefindRoute from '../hooks/useRoutes'
 import auth from '../routes/auth'
 import Cookie from 'universal-cookie'
+import {useNavigate} from 'react-router-dom'
 
 export default function Login(){
 
     const { register, formState: {errors}, handleSubmit } = useForm()
     const [notFoundRoute, setNotFoundRoute] = useState(false)
     const [loader, setLoader] = useState(false)
-
+    const navigate = useNavigate()
 
     useEffect(()=> {
         if(auth.isAuthenticated()){
-            window.location = "/route"
+          return navigate("/route")
         }
     })
 
@@ -24,6 +25,7 @@ export default function Login(){
       console.log(data);
       setLoader(true)
       const route = await usefindRoute(data)
+      console.log(route.data)
       if(route.name === "AxiosError") {
         setNotFoundRoute(true)
         setLoader(false)
@@ -33,7 +35,7 @@ export default function Login(){
       const cookies = new Cookie()
       cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
       auth.login(() => {
-        window.location = "/route"
+        navigate("/route")
       })
 
       setLoader(false)
