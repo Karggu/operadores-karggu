@@ -6,6 +6,7 @@ import logoisokarggu from '../SVG/logoisokarggu.svg'
 import usefindRoute from '../hooks/useRoutes'
 import auth from '../routes/auth'
 import Cookie from 'universal-cookie'
+import {useNavigate} from 'react-router-dom'
 
 export default function Login(){
 
@@ -22,7 +23,7 @@ export default function Login(){
 
     useEffect(()=> {
         if(auth.isAuthenticated()){
-            window.location = "/route"
+          return navigate("/route")
         }
     })
 
@@ -40,7 +41,7 @@ export default function Login(){
       
       cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
       auth.login(() => {
-        window.location = "/route"
+        navigate("/route")
       })
 
       setLoader(false)

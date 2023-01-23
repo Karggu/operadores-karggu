@@ -1,11 +1,17 @@
 import axios from "axios";
-import { PATH_API } from "../routes/paths.routes";
+import { NATIONALS_API, INTEGRATIONS_API } from "../routes/paths.routes";
 
-export default async function useShipmentsFolios(data){
+export default async function useShipmentsFolios(data, type){
 
     try {
-        const response = await axios.post(`${PATH_API}/routes/folios`,data)
-        console.log(response.data);
+        let url = '';
+        if(type === 'shipment'){
+            url = `${INTEGRATIONS_API}/routes/folios`
+        }
+        if(type === 'pickup'){
+            url = `${NATIONALS_API}/pickups/getAll`
+        }
+        const response = await axios.post(url,data)
         return response.data
     } catch (error) {
         return error
