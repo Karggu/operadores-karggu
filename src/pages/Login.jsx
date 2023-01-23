@@ -13,6 +13,8 @@ export default function Login(){
     const { register, formState: {errors}, handleSubmit } = useForm()
     const [notFoundRoute, setNotFoundRoute] = useState(false)
     const [loader, setLoader] = useState(false)
+    const navigate = useNavigate()
+
     const [value, setValue] = useState("");
     const onChange = e => {
       const input = e.target.value;
@@ -31,14 +33,13 @@ export default function Login(){
       console.log(data);
       setLoader(true)
       const route = await usefindRoute(data)
-      const cookies = new Cookie()
-      if(route.name === "AxiosError" || cookies.get('auth_route') === null || cookies.get('auth_route') === undefined) {
-        cookies.remove('auth_route')
+      if(route.name === "AxiosError") {
         setNotFoundRoute(true)
         setLoader(false)
         return
       }
       
+      const cookies = new Cookie()
       cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
       auth.login(() => {
         navigate("/route")
