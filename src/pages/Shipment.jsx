@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {useParams} from 'react-router-dom'
+import useUploadImg from '../hooks/useUploadImg';
 import ImgError from '../img/cerrar.png'
 
 export default function Shipment(){
@@ -7,13 +8,16 @@ export default function Shipment(){
     const {shipment_id, status} = useParams()
     const [errorImg, setErrorImg] = useState(false)
 
-    const handleImgUpload = e => {
+    const HandleImgUpload = async e => {
         setErrorImg(!errorImg)
         console.log(e.target.files[0]);
         const file = e.target.files[0]
         if(file.type !== 'image/png' || file.type !== 'image/jpeg'){
             setErrorImg(!errorImg)
         }
+        const file_url = `shipments-evidence/${shipment_id}.pdf`
+        const upload = await useUploadImg(file, file_url)
+        console.log(upload);
     }
 
     return(
@@ -37,7 +41,7 @@ export default function Shipment(){
                     <p className='mb-6'>Envío: {shipment_id}</p>
                     <p className='mb-6 text-yellow-600 font-medium'>Sube una foto como evidencia de que el envío se entrego correctamente.</p>
                     <label htmlFor="img_input" className='p-2 bg-blue-400 rounded-md font-medium'>Subir imagén</label>
-                    <input type="file" name="" id="img_input" className='opacity-0' onChange={handleImgUpload}/>
+                    <input type="file" name="" id="img_input" className='opacity-0' onChange={HandleImgUpload}/>
                     {/* <button className="p-1 mx-1 bg-green-500 font-bold rounded-md text-white">Enregar envío</button> */}
                 </div>
                 </>
