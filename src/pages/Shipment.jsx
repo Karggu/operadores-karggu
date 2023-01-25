@@ -4,7 +4,7 @@ import useFindShipment from '../hooks/useFinishShipment';
 import stateShipment from '../hooks/stateShipment';
 import useUploadImg from '../hooks/useUploadImg';
 import ImgError from '../img/cerrar.png'
-
+import { useNavigate } from "react-router-dom"
 import updateOrder from '../hooks/updateOrder';
 import DeliveredShipment from '../components/DeliveredShipment';
 import Rejectedshipment from '../components/RejectedShipment';
@@ -12,6 +12,7 @@ import TryShipment from '../components/TryShipment';
 
 export default function Shipment(){
 
+    const navigate = useNavigate()
     const {shipment_id, status} = useParams()
     const [errorImg, setErrorImg] = useState(false)
     const [uploadImg, setUploadImg] = useState(false)
@@ -70,16 +71,20 @@ export default function Shipment(){
         }
     }
 
+    function closePage() {
+        navigate("/route/road");
+    }
+
     return(
         <div>
             {status === 'entregar'?(
-                <DeliveredShipment shipment_id={shipment_id} finish={finish} uploadImg={uploadImg} handleFinishShipment={handleFinishShipment} HandleImgUpload={HandleImgUpload} ImgError={ImgError} setErrorImg={setErrorImg}/>
+                <DeliveredShipment shipment_id={shipment_id} finish={finish} uploadImg={uploadImg} handleFinishShipment={handleFinishShipment} HandleImgUpload={HandleImgUpload} ImgError={ImgError} setErrorImg={setErrorImg} closePage={closePage}/>
             ):null}
             {status === 'rechazar'?(
-                <Rejectedshipment shipment_id={shipment_id} reject={reject}/>
+                <Rejectedshipment shipment_id={shipment_id} reject={reject} closePage={closePage}/>
             ):null}
             {status === 'intento'?(
-                <TryShipment shipment_id={shipment_id} intent={intent}/>
+                <TryShipment shipment_id={shipment_id} intent={intent} closePage={closePage}/>
             ): null}
         </div>
     )
