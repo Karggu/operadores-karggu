@@ -7,6 +7,7 @@ import usefindRoute from '../hooks/useRoutes'
 import auth from '../routes/auth'
 import Cookie from 'universal-cookie'
 import {useNavigate} from 'react-router-dom'
+import { INTEGRATIONS_API, NATIONALS_API } from '../routes/paths.routes'
 
 export default function Login(){
 
@@ -16,6 +17,8 @@ export default function Login(){
     const navigate = useNavigate()
     
     useEffect(()=> {
+        console.log(INTEGRATIONS_API);
+        console.log(NATIONALS_API);
         if(auth.isAuthenticated()){
           return navigate("/route")
         }

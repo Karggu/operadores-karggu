@@ -1,2 +1,2 @@
-export const INTEGRATIONS_API = "http://localhost:9090"
-export const NATIONALS_API = "http://localhost:3000/v1"
+export const INTEGRATIONS_API = process.env.REACT_APP_URI_INTREGRATIONS_API
+export const NATIONALS_API = process.env.REACT_APP_URI_INTREGRATIONS_API
