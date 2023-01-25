@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import stateShipment from "../hooks/stateShipment";
 import updateOrder from "../hooks/updateOrder";
 import ImgError from '../img/cerrar.png'
@@ -7,7 +7,7 @@ export default function Rejectedshipment({shipment_id, reject}){
 
     const [comment, setComment] = useState('')
     const [error, setError] = useState(false)
-    
+
     const handleRejectShipment = async () => {
         console.log(comment);
         if(comment.length< 5){

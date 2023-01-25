@@ -17,14 +17,11 @@ export default function Shipment(){
     const [uploadImg, setUploadImg] = useState(false)
     const [finish, setFinish] = useState(false)
     const [reject, setReject] = useState(false)
-    const [shipment, setShipment] = useState({})
     const [intent, setTryOrder] = useState(false)
 
     useEffect(() => {   
         const GetShipment = async ()=> {
             const res = await useFindShipment(shipment_id)
-            console.log(res);
-            setShipment(res.response)
             if(!res.success){
                 console.log('error');
             }
