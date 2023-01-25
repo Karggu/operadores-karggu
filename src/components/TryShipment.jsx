@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { Fragment } from "react";
 import ImgAdvert from '../img/advertencia.png'
 import Close from '../SVG/backward.svg';
 import { Listbox, Transition } from '@headlessui/react'

@@ -1,7 +1,6 @@
 import ImgAccept from '../img/accept.png'
 import {useNavigate} from 'react-router-dom'
 import auth from '../routes/auth'
-import { useEffect } from 'react'
 
 export default function RouteSuccess(){
 

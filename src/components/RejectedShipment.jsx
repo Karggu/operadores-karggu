@@ -1,6 +1,3 @@
-import { useState } from "react"
-import stateShipment from "../hooks/stateShipment";
-import updateOrder from "../hooks/updateOrder";
 import ImgError from '../img/cerrar.png'
 import Close from '../SVG/backward.svg';
 
