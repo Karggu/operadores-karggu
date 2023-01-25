@@ -5,6 +5,7 @@ import { PrivateRoute } from "./routes/PrivateRoute";
 import RouteRoad from "./pages/RouteRoad";
 import Shipment from "./pages/Shipment";
 import RouteSuccess from "./pages/RouteSuccess";
+import RouteCollection from "./pages/RouteCollection";
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
           <Route path="/route/road/:shipment_id/:status" element={
             <PrivateRoute>
               <Shipment/>
+            </PrivateRoute>
+          }/>
+          <Route path="/route/collection" element={
+            <PrivateRoute>
+              <RouteCollection/>
             </PrivateRoute>
           }/>
         </Routes>

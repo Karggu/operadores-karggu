@@ -3,11 +3,12 @@ import { useEffect } from "react"
 import Cookie from 'universal-cookie'
 import NavOptions from "../components/NavOptions"
 import UseInitRoute from "../hooks/initRoute"
-import useShipmentsFolios from "../hooks/useShipmentsFolios"
+import shipmentsFolios from "../hooks/useShipmentsFolios"
 import isologokarggu from '../SVG/logoisokarggu.svg'
 import {useNavigate} from 'react-router-dom'
 import usefindRoute from "../hooks/useRoutes"
 import registMilleage from "../hooks/milleageRegist"
+import getPickups from "../hooks/getPickups"
 
 export default function RouteShipments(){
 
@@ -30,9 +31,12 @@ export default function RouteShipments(){
             const find_route = await usefindRoute({id_route: route._id, plates_vehicle: null})
             const status_init = find_route.data.status.find(s => s.comment === 'Inicio de ruta')
             console.log(status_init.comment);
-            if(status_init.comment){
-                console.log('cierto');
+            if(status_init.comment && route.type === 'shipment'){
                 navigate("/route/road")
+            }
+
+            if(status_init.comment && route.type === 'pickup'){
+                navigate("/route/collection")
             }
         }
         VeifyInitRoute()
@@ -41,12 +45,14 @@ export default function RouteShipments(){
         setVehicle(route.vehicle)
 
         const GetFolios = async () => {
-            const shipments = await useShipmentsFolios(route.folios, route.type)
             if(route.type === 'shipment'){
+                const shipments = await shipmentsFolios(route.folios, route.type)
                 setShipments(shipments.data.response)
             }
             if(route.type === 'pickup'){
-                setShipments(shipments.pickupOrders)
+                const pickups = await getPickups(route.folios)
+                console.log(pickups);
+                setShipments(pickups.pickupOrders)
             }
         }
         GetFolios()
@@ -60,25 +66,33 @@ export default function RouteShipments(){
     }
 
     const handleInitRoute = async () => {
-        shipments.forEach( shipment => {
-            const ready = shipment.stateHistory.find( state => state.comment === 'Cargado al camión')
-            if(!ready) setIncompleted(true)
-        })
-        const states = shipments.map( shipment =>{
-            return shipment.stateHistory.find(state => state.comment === 'Cargado al camión')
-        })
-        console.log();
-        console.log(states.includes(undefined));
-        const inc = states.includes(undefined) 
-        if(!inc){
-            console.log('ruta completa');
-            // if(!milleage.regist){
-            //     setMilleage({...milleage, error: true})
-            //     return
-            // }
+        console.log(route);
+        if(route.type === 'shipment'){
+            shipments.forEach( shipment => {
+                const ready = shipment.stateHistory.find( state => state.comment === 'Cargado al camión')
+                if(!ready) setIncompleted(true)
+            })
+            const states = shipments.map( shipment =>{
+                return shipment.stateHistory.find(state => state.comment === 'Cargado al camión')
+            })
+            console.log();
+            console.log(states.includes(undefined));
+            const inc = states.includes(undefined) 
+            if(!inc){
+                console.log('ruta completa');
+                // if(!milleage.regist){
+                //     setMilleage({...milleage, error: true})
+                //     return
+                // }
+                await UseInitRoute(route._id, 'Inicio de ruta')
+                navigate("/route/road")
+                console.log('ruta completa');
+            }
+        }
+
+        if(route.type === 'pickup'){
             await UseInitRoute(route._id, 'Inicio de ruta')
-            navigate("/route/road")
-            console.log('ruta completa');
+            navigate("/route/collection")
         }
     }
     if(loadding) return <div className="lds-rizng"><div></div><div></div><div></div><div></div></div>
@@ -103,11 +117,11 @@ export default function RouteShipments(){
                 {milleage.error?(<p className="text-red-500 text-sm">Registro del kilometraje obligatorio</p>):null}
                 <hr className="my-5 bg-red-500 h-1 rounded-full"/>
                 <div>
-                    <p className="text-red-500 font-medium">Envíos a entregar:</p>
+                    {route.type === 'shipment'?<p className="text-red-500 font-medium">Envíos a entregar:</p>:<p className="text-red-500 font-medium">Envíos a recolectar:</p>}
                     {route.type === 'pickup'?(
                     <ul>
                         {shipments.map( (shipment, i) =>(
-                            <li key={i} className="p-2 my-2 bg-green-500 rounded-full shadow-xl text-white font-bold">{i+1}. {shipment._id}</li>
+                            <li key={i} className="p-2 px-4 my-2 bg-blue-500 rounded-full shadow-xl text-white font-bold">{i+1}. {shipment._id} <p>Dirección: {shipment.address.city} {shipment.address.state} {shipment.address.colony} {shipment.address.street} {shipment.address.zipCode}</p></li>
                         ))}
                     </ul>
                     ):null}
