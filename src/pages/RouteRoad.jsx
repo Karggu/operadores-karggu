@@ -6,7 +6,7 @@ import ImgWarning from '../img/advertencia.png'
 import Close from '../SVG/backward.svg';
 import initRoute from "../hooks/initRoute"
 import registMilleage from "../hooks/milleageRegist"
-import auth from "../routes/auth"
+// import auth from "../routes/auth"
 
 export default function RouteRoad(){
 
@@ -74,9 +74,7 @@ export default function RouteRoad(){
         const milleage_regist = await registMilleage({id: route._id, milleage_type: 'finish', milleage: milleage})
         console.log(milleage_regist);
         if(milleage_regist.success){
-            auth.logout(() => {
-                navigate("/")
-            })
+            navigate("/route/success")
         }
     }
 

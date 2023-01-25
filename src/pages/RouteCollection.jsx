@@ -3,11 +3,13 @@ import getPickups from "../hooks/getPickups"
 import Cookies from "universal-cookie"
 import statusPickup from "../hooks/statusCollection"
 import ImgAdvert from '../img/advertencia.png'
+import { useNavigate } from "react-router-dom"
 
 export default function RouteCollection(){
 
     const [pickups, setPickups] = useState([])
     const [modalWarning, setModalWarning] = useState(false)
+    const navigate = useNavigate()
  
     useEffect(() => {
         const getPickupsAll = async () => {
@@ -41,6 +43,7 @@ export default function RouteCollection(){
             console.log('ruta incompleta');
         }else{
             console.log('ruta completa');
+            navigate("/route/collections/success")
         }
 
     }
