@@ -86,7 +86,7 @@ export default function Login(){
                   </div>
                   <div className='mb-5 flex flex-col items-center'>
                     {notFoundRoute ? <p className='text-yellow-600 text-sm text-center mb-4'>No se encontró la ruta, verifica los datos ingresados.</p>: ""}
-                    {loader ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> : <button type='submit' className='relative bg-red-500 rounded-full text-white font-bold text-center py-2 shadow-xl hover:bg-white hover:text-red-500 w-full'>Login</button>}
+                    {loader ? <div className="lds-rizng"><div></div><div></div><div></div><div></div></div> : <button type='submit' className='relative bg-red-500 rounded-full text-white font-bold text-center py-2 shadow-xl hover:bg-white hover:text-red-500 w-full'>Login</button>}
                     
                   </div>
               </form>

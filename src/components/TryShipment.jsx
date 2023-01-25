@@ -1,51 +1,14 @@
 import { useState, Fragment } from "react";
-import stateShipment from "../hooks/stateShipment";
-import registTryOrder from "../hooks/updateRegistTryOrder";
 import ImgAdvert from '../img/advertencia.png'
 import Close from '../SVG/backward.svg';
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
-const options = [
-    {
-      id: 1,
-      option: 'Dirección Incorrecta'
-    },
-    {
-      id: 2,
-      option: 'Dirección Insuficiente'
-    },
-    {
-      id: 3,
-      option: 'Destinatario Ausente'
-    },
-    {
-      id: 4,
-      option: 'Etc.',
-    }
-]
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function TryShipment ({shipment_id, intent, closePage}){
-
-    // const [tryOrder, setTryOrder] = useState('Dirección incorrecta')
-    const [selected, setSelected] = useState(options[0])
-
-    // const handleChangeSelect = e => {
-    //     console.log(e.target.value);
-    //     setTryOrder(e.target.value)
-    // }
-
-    const handleRegistTry = async () => {
-        console.log(selected);
-        // const res = await registTryOrder(shipment_id, {comment: tryOrder})
-        // const state = await stateShipment(shipment_id, "Intento Entrega")
-        // console.log(res);
-        // console.log(state);
-    }
+export default function TryShipment ({shipment_id, intent, closePage, handleRegistTry, selected, setSelected, options}){
 
     return(
         <>

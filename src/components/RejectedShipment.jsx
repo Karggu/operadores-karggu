@@ -4,29 +4,7 @@ import updateOrder from "../hooks/updateOrder";
 import ImgError from '../img/cerrar.png'
 import Close from '../SVG/backward.svg';
 
-export default function Rejectedshipment({shipment_id, reject, closePage}){
-
-    const [comment, setComment] = useState('')
-    const [error, setError] = useState(false)
-
-    const handleRejectShipment = async () => {
-        console.log(comment);
-        if(comment.length< 5){
-            return setError(!error)
-        }
-        const data = {reject_comment: comment}
-        const res = await updateOrder(shipment_id, data)
-        if(res.success){
-            const update_order = await stateShipment(shipment_id, "Rechazado")
-            console.log(update_order);
-        }
-        console.log(res);
-    }
-
-    const handleChange = e => {
-        setComment(e.target.value)
-        setError(false)
-    }
+export default function Rejectedshipment({shipment_id, reject, closePage, handleRejectShipment, error,handleChange}){
 
     return(
         <>

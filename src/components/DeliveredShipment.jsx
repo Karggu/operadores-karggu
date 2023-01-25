@@ -32,7 +32,7 @@ export default function DeliveredShipment({shipment_id, finish, uploadImg, handl
                             <button className="p-1 mx-1 bg-green-500 font-bold rounded-md text-white mt-3" onClick={handleFinishShipment}>Finalizar envío envío</button>
                             </>
                         ):null}
-                        {!uploadImg?(<>
+                        {!finish && !uploadImg?(<>
                             <p className='mb-4 text-yellow-600 font-medium'>Sube una foto como evidencia de que el envío se entrego correctamente.</p>
                             <label htmlFor="img_input" className='p-2 bg-blue-400 rounded-md font-medium cursor-pointer text-white'>Subir imagén</label>
                             <input type="file" name="" id="img_input" className='opacity-0' onChange={HandleImgUpload}/>

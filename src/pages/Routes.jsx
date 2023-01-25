@@ -2,11 +2,12 @@ import { useState } from "react"
 import { useEffect } from "react"
 import Cookie from 'universal-cookie'
 import NavOptions from "../components/NavOptions"
-import UseInitRoute from "../hooks/useInitRoute"
+import UseInitRoute from "../hooks/initRoute"
 import useShipmentsFolios from "../hooks/useShipmentsFolios"
 import isologokarggu from '../SVG/logoisokarggu.svg'
 import {useNavigate} from 'react-router-dom'
 import usefindRoute from "../hooks/useRoutes"
+import registMilleage from "../hooks/milleageRegist"
 
 export default function RouteShipments(){
 
@@ -20,6 +21,7 @@ export default function RouteShipments(){
         error: false
     })
     const navigate = useNavigate()
+    const [loadding, setLoadding] = useState(true)
 
     useEffect( () =>{
         const cookies = new Cookie()
@@ -48,10 +50,13 @@ export default function RouteShipments(){
             }
         }
         GetFolios()
+        setLoadding(false)
     },[navigate])
 
-    const handleMilleage = () => {
+    const handleMilleage = async () => {
         setMilleage({...milleage, regist: true})
+        const res = await registMilleage({id: route._id,milleague_type: 'start', milleage: milleage.milleage})
+        console.log(res);
     }
 
     const handleInitRoute = async () => {
@@ -59,18 +64,24 @@ export default function RouteShipments(){
             const ready = shipment.stateHistory.find( state => state.comment === 'Cargado al camión')
             if(!ready) setIncompleted(true)
         })
-        if(!incompleted){
-            if(!milleage.regist){
-                setMilleage({...milleage, error: true})
-                return
-            }
+        const states = shipments.map( shipment =>{
+            return shipment.stateHistory.find(state => state.comment === 'Cargado al camión')
+        })
+        console.log();
+        console.log(states.includes(undefined));
+        const inc = states.includes(undefined) 
+        if(!inc){
+            console.log('ruta completa');
+            // if(!milleage.regist){
+            //     setMilleage({...milleage, error: true})
+            //     return
+            // }
             await UseInitRoute(route._id, 'Inicio de ruta')
             navigate("/route/road")
-        }else{
-            console.log('ruta incompleta');
+            console.log('ruta completa');
         }
     }
-
+    if(loadding) return <div className="lds-rizng"><div></div><div></div><div></div><div></div></div>
     return(
         <div className="">
             <NavOptions/>
