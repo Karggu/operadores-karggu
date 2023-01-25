@@ -5,7 +5,7 @@ export default async function useUploadImg(img, filUrl){
 
     try {
         const response = await axios.postForm(`${NATIONALS_API}/upload`,{
-            'filUrl': filUrl,
+            'fileUrl': filUrl,
             'file': img
         })
         return response.data
