@@ -42,6 +42,7 @@ export default function Shipment(){
     const [comment, setComment] = useState('')
     const [error, setError] = useState(false)
     const [selected, setSelected] = useState(options[0])
+    const [loader, setLoader] = useState(false)
 
 
     useEffect(() => {   
@@ -71,6 +72,7 @@ export default function Shipment(){
     },[shipment_id])
 
     const HandleImgUpload = async e => {
+        setLoader(true)
         setErrorImg(!errorImg)
         console.log(e.target.files[0]);
         const file = e.target.files[0]
@@ -85,14 +87,18 @@ export default function Shipment(){
             const success_upload = await updateOrder(shipment_id, data)
             console.log(success_upload);
             setUploadImg(true)
+            setLoader(false)
         }else{
             setUploadImg(false)
+            setLoader(false)
         }
     }
 
     const handleRejectShipment = async () => {
+        setLoader(true)
         console.log(comment);
         if(comment.length< 5){
+            setLoader(false)
             return setError(!error)
         }
         const data = {reject_comment: comment}
@@ -101,8 +107,10 @@ export default function Shipment(){
             const update_order = await stateShipment(shipment_id, "Rechazado")
             console.log(update_order);
             setReject(true)
+            setLoader(false)
         }
         console.log(res);
+        setLoader(false)
     }
 
     const handleChange = e => {
@@ -118,12 +126,14 @@ export default function Shipment(){
     }
 
     const handleRegistTry = async () => {
+        setLoader(true)
         console.log(selected);
         const res = await registTryOrder(shipment_id, {comment: selected.option})
         const state = await stateShipment(shipment_id, "Intento Entrega")
         console.log(res);
         console.log(state);
         setTryOrder(true)
+        setLoader(false)
     }
 
     function closePage() {
@@ -133,13 +143,13 @@ export default function Shipment(){
     return(
         <div>
             {status === 'entregar'?(
-                <DeliveredShipment shipment_id={shipment_id} finish={finish} uploadImg={uploadImg} handleFinishShipment={handleFinishShipment} HandleImgUpload={HandleImgUpload} ImgError={ImgError} setErrorImg={setErrorImg} closePage={closePage}/>
+                <DeliveredShipment shipment_id={shipment_id} finish={finish} uploadImg={uploadImg} handleFinishShipment={handleFinishShipment} HandleImgUpload={HandleImgUpload} ImgError={ImgError} setErrorImg={setErrorImg} closePage={closePage} loader={loader}/>
             ):null}
             {status === 'rechazar'?(
-                <Rejectedshipment shipment_id={shipment_id} reject={reject} closePage={closePage} handleRejectShipment={handleRejectShipment} error={error} handleChange={handleChange}/>
+                <Rejectedshipment shipment_id={shipment_id} reject={reject} closePage={closePage} handleRejectShipment={handleRejectShipment} error={error} handleChange={handleChange} loader={loader}/>
             ):null}
             {status === 'intento'?(
-                <TryShipment shipment_id={shipment_id} intent={intent} closePage={closePage} handleRegistTry={handleRegistTry} selected={selected} setSelected={setSelected} options={options}/>
+                <TryShipment shipment_id={shipment_id} intent={intent} closePage={closePage} handleRegistTry={handleRegistTry} selected={selected} setSelected={setSelected} options={options} loader={loader}/>
             ): null}
         </div>
     )

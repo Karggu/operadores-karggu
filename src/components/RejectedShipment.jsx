@@ -1,7 +1,7 @@
 import ImgError from '../img/cerrar.png'
 import Close from '../SVG/backward.svg';
 
-export default function Rejectedshipment({shipment_id, reject, closePage, handleRejectShipment, error,handleChange}){
+export default function Rejectedshipment({shipment_id, reject, closePage, handleRejectShipment, error,handleChange, loader}){
 
     return(
         <>
@@ -19,6 +19,7 @@ export default function Rejectedshipment({shipment_id, reject, closePage, handle
                         <textarea className='border-2 border-black-700 rounded-md p-2 w-full h-28 text-sm sm:text-base' onChange={handleChange}></textarea>
                         {error?<p className="text-red-600 font-bold my-2 text-xs">El mensaje es muy corto, debe tenr un mínimo de 5 caracteres.</p>:null}
                         <button className="p-1 mt-2 bg-red-500 font-bold rounded-md text-white" onClick={handleRejectShipment}>Rechazar envío</button></>)}
+                        {loader ? <div className="lds-ring mb-8"><div></div><div></div><div></div><div></div></div> : null}
                     </div>
         </>
     )

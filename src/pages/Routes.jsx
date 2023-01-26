@@ -95,7 +95,7 @@ export default function RouteShipments(){
             navigate("/route/collection")
         }
     }
-    if(loadding) return <div className="lds-rizng"><div></div><div></div><div></div><div></div></div>
+    if(loadding) return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
     return(
         <div className="">
             <NavOptions/>

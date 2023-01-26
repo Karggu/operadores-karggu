@@ -1,7 +1,7 @@
-import ImgAccept from '../img/accept.png'
+import ImgAccept from '../img/accept.png';
 import Close from '../SVG/backward.svg';
 
-export default function DeliveredShipment({shipment_id, finish, uploadImg, handleFinishShipment, HandleImgUpload, errorImg, ImgError, setErrorImg, closePage}){
+export default function DeliveredShipment({shipment_id, finish, uploadImg, handleFinishShipment, HandleImgUpload, errorImg, ImgError, setErrorImg, closePage, loader}){
     return(
         <>  {errorImg?(
             <>
@@ -33,8 +33,9 @@ export default function DeliveredShipment({shipment_id, finish, uploadImg, handl
                             </>
                         ):null}
                         {!finish && !uploadImg?(<>
-                            <p className='mb-4 text-yellow-600 font-medium'>Sube una foto como evidencia de que el envío se entrego correctamente.</p>
-                            <label htmlFor="img_input" className='p-2 bg-blue-400 rounded-md font-medium cursor-pointer text-white'>Subir imagén</label>
+                            {loader === false ? <p className='mb-4 text-yellow-600 font-medium'>Sube una foto como evidencia de que el envío se entrego correctamente.</p>
+                            : <div className="lds-ring mb-8"><div></div><div></div><div></div><div></div></div>}
+                            <label htmlFor="img_input" className='p-2 bg-blue-400 rounded-md font-medium cursor-pointer text-white'>Subir imagen</label>
                             <input type="file" name="" id="img_input" className='opacity-0' onChange={HandleImgUpload}/>
                         </>):null}
                     </div>

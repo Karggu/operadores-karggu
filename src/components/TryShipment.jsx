@@ -8,7 +8,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function TryShipment ({shipment_id, intent, closePage, handleRegistTry, selected, setSelected, options}){
+export default function TryShipment ({shipment_id, intent, closePage, handleRegistTry, selected, setSelected, options, loader}){
 
     return(
         <>
@@ -88,6 +88,7 @@ export default function TryShipment ({shipment_id, intent, closePage, handleRegi
                             )}
                             </Listbox>
                             <button className="mt-3 p-1 mx-1 bg-yellow-500 font-bold rounded-md text-white" onClick={handleRegistTry}>Registrar intento</button>
+                            {loader ? <div className="lds-ring mb-8"><div></div><div></div><div></div><div></div></div> : null}
                         </>)}
                     </div>
             </>
