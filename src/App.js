@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login/>}/>
           <Route path="/route/success" element={<RouteSuccess/>}/>
+          <Route path="/route/collections/success" element={<RouteSuccess/>}/>
           <Route path="/route" element={
             <PrivateRoute>
               <RouteShipments/>

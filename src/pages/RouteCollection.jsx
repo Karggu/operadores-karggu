@@ -4,17 +4,20 @@ import Cookies from "universal-cookie"
 import statusPickup from "../hooks/statusCollection"
 import ImgAdvert from '../img/advertencia.png'
 import { useNavigate } from "react-router-dom"
+import initRoute from "../hooks/initRoute"
 
 export default function RouteCollection(){
 
     const [pickups, setPickups] = useState([])
     const [modalWarning, setModalWarning] = useState(false)
+    const [route, setRoute] = useState({})
     const navigate = useNavigate()
  
     useEffect(() => {
         const getPickupsAll = async () => {
             const cookies = new Cookies()
             const route = cookies.get("auth_route")
+            setRoute(route)
             const pickups = await getPickups(route.folios)
             const filter_pickups = pickups.pickupOrders.map( pickup =>{
                 pickup.state = pickup.status[pickup.status.length - 1]
@@ -31,7 +34,7 @@ export default function RouteCollection(){
         console.log(res);
     }
 
-    const finishRecolections = () => {
+    const finishRecolections = async () => {
         pickups.map(pickup => {
             if(pickup.state.comment !== 'Recolectado' && pickup.state.comment !== 'No Recolectado'){
                 setModalWarning(true)
@@ -43,6 +46,7 @@ export default function RouteCollection(){
             console.log('ruta incompleta');
         }else{
             console.log('ruta completa');
+            await initRoute(route._id,"Fin de Ruta")
             navigate("/route/collections/success")
         }
 

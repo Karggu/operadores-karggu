@@ -111,7 +111,7 @@ export default function RouteRoad(){
                                 <button className="p-1 bg-green-500 font-bold rounded-md w-1/3" onClick={() => handleState(shipment, 'entregar')}>Entregar</button>
                                 <button className="p-1 mx-3 bg-red-500 font-bold rounded-md w-1/3" onClick={() => handleState(shipment, 'rechazar')}>Rechazar</button>
                                 <button className="p-1 mx-1 bg-yellow-500 font-bold rounded-md w-1/3" onClick={() => handleState(shipment, 'intento')}>Intento</button>
-                            </div></>):null}
+                            </div></>):<p className="text-center font-bold mt-4">{shipment.state.comment.toUpperCase()}</p>}
                     </div>
                 ))}
             </div>

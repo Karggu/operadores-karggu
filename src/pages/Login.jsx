@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react'
 import LicenseIcon from '../SVG/license.svg'
 import PasswordIcon from '../SVG/password.svg'
 import logoisokarggu from '../SVG/logoisokarggu.svg'
-import usefindRoute from '../hooks/useRoutes'
 import auth from '../routes/auth'
 import Cookie from 'universal-cookie'
 import {useNavigate} from 'react-router-dom'
 import { INTEGRATIONS_API, NATIONALS_API } from '../routes/paths.routes'
+import loginRoute from '../hooks/loginRoute'
 
 export default function Login(){
 
@@ -27,7 +27,7 @@ export default function Login(){
   const onSubmit = async data => {
       console.log(data);
       setLoader(true)
-      const route = await usefindRoute(data)
+      const route = await loginRoute(data)
       if(route.name === "AxiosError") {
         setNotFoundRoute(true)
         setLoader(false)
@@ -72,7 +72,7 @@ export default function Login(){
                         height={50}
                       />
                     </div>
-                    <input type="text" pattern='[a-f0-9]{24}' minLength="24" maxLength="24" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta' {...register("id_route",{required: true})} aria-invalid={errors.id_route ? "true": "false"}/>
+                    <input type="text" pattern='[a-f0-9]{4}' minLength="4" maxLength="4" className='border-2 pl-14 py-3 placeholder:text-black border-t-0 border-l-0 border-r-0 border-b-slate-800' placeholder='ID de la Ruta' {...register("id_route",{required: true})} aria-invalid={errors.id_route ? "true": "false"}/>
                     {errors.id_route?.type === 'required' && <p role="alert" className='text-red-500 text-sm'>ID de la Ruta obligatoria</p>}
                   </div>
                   <div className='relative my-4'>
