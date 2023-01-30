@@ -2,13 +2,13 @@ import { useState } from "react"
 import { useEffect } from "react"
 import Cookie from 'universal-cookie'
 import NavOptions from "../components/NavOptions"
-import UseInitRoute from "../hooks/initRoute"
-import shipmentsFolios from "../hooks/useShipmentsFolios"
+import UseInitRoute from "../services/initRoute"
+import shipmentsFolios from "../services/useShipmentsFolios"
 import isologokarggu from '../SVG/logoisokarggu.svg'
 import {useNavigate} from 'react-router-dom'
-import usefindRoute from "../hooks/useRoutes"
-import registMilleage from "../hooks/milleageRegist"
-import getPickups from "../hooks/getPickups"
+import usefindRoute from "../services/useRoutes"
+import registMilleage from "../services/milleageRegist"
+import getPickups from "../services/getPickups"
 
 export default function RouteShipments(){
 

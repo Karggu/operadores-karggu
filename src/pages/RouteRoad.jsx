@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
-import useShipmentsFolios from "../hooks/useShipmentsFolios"
+import useShipmentsFolios from "../services/useShipmentsFolios"
 import Cookie from 'universal-cookie'
 import { useNavigate } from "react-router-dom"
 import ImgWarning from '../img/advertencia.png'
 import Close from '../SVG/backward.svg';
-import initRoute from "../hooks/initRoute"
-import registMilleage from "../hooks/milleageRegist"
-// import auth from "../routes/auth"
+import initRoute from "../services/initRoute"
+import registMilleage from "../services/milleageRegist"
 
 export default function RouteRoad(){
 

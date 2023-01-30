@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom'
-import findShipment from '../hooks/useFinishShipment';
-import stateShipment from '../hooks/stateShipment';
-import useUploadImg from '../hooks/useUploadImg';
+import findShipment from '../services/useFinishShipment';
+import stateShipment from '../services/stateShipment';
+import useUploadImg from '../services/useUploadImg';
 import ImgError from '../img/cerrar.png'
 import { useNavigate } from "react-router-dom"
-import updateOrder from '../hooks/updateOrder';
+import updateOrder from '../services/updateOrder';
 import DeliveredShipment from '../components/DeliveredShipment';
 import Rejectedshipment from '../components/RejectedShipment';
 import TryShipment from '../components/TryShipment';
-import registTryOrder from "../hooks/updateRegistTryOrder";
+import registTryOrder from "../services/updateRegistTryOrder";
 
 const options = [
     {

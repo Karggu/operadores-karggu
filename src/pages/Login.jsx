@@ -6,8 +6,7 @@ import logoisokarggu from '../SVG/logoisokarggu.svg'
 import auth from '../routes/auth'
 import Cookie from 'universal-cookie'
 import {useNavigate} from 'react-router-dom'
-import { INTEGRATIONS_API, NATIONALS_API } from '../routes/paths.routes'
-import loginRoute from '../hooks/loginRoute'
+import loginRoute from '../services/loginRoute'
 
 export default function Login(){
 
@@ -17,8 +16,6 @@ export default function Login(){
     const navigate = useNavigate()
     
     useEffect(()=> {
-        console.log(INTEGRATIONS_API);
-        console.log(NATIONALS_API);
         if(auth.isAuthenticated()){
           return navigate("/route")
         }
