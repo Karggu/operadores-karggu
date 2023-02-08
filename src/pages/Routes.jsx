@@ -120,7 +120,7 @@ export default function RouteShipments(){
                     {route.type === 'shipment'?<p className="text-red-500 font-medium">Envíos a entregar:</p>:<p className="text-red-500 font-medium">Envíos a recolectar:</p>}
                     {route.type === 'pickup'?(
                     <ul>
-                        {shipments.map( (shipment, i) =>(
+                        {shipments && shipments.map( (shipment, i) =>(
                             <li key={i} className="p-2 px-4 my-2 bg-blue-500 rounded-full shadow-xl text-white font-bold">{i+1}. {shipment._id} <p>Dirección: {shipment.address.city} {shipment.address.state} {shipment.address.colony} {shipment.address.street} {shipment.address.zipCode}</p></li>
                         ))}
                     </ul>
@@ -128,7 +128,7 @@ export default function RouteShipments(){
 
                     {route.type === 'shipment'?(
                         <ul>
-                            {shipments.map( (shipment, i) =>(
+                            {shipments && shipments.map( (shipment, i) =>(
                                 <li key={i} className={`p-2 px-4 my-2 rounded-full shadow-xl text-white font-bold ${shipment.stateHistory.find(state => state.comment === 'Cargado al camión')?'bg-green-500':'bg-red-500'}`}>{i+1}. {shipment._id} {shipment.stateHistory.find(state => state.comment === 'Cargado al camión')?'Registrado':'No Registrado'}</li>
                             ))}
                         </ul>
