@@ -36,6 +36,8 @@ export default function Login(){
       } else {
           const cookies = new Cookie()
           cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
+          console.log("🚀 ~ file: Login.jsx:39 ~ onSubmit ~ route.data:", route.data)
+          console.log("🚀 ~ file: Login.jsx:39 ~ onSubmit ~ route.data:", JSON.stringify(route.data).length)
           auth.login(() => {
             navigate("/route")
           })
