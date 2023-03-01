@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useEffect } from "react"
-import Cookie from 'universal-cookie'
 import NavOptions from "../components/NavOptions"
 import UseInitRoute from "../services/initRoute"
 import shipmentsFolios from "../services/useShipmentsFolios"
@@ -25,8 +24,8 @@ export default function RouteShipments(){
     const [loadding, setLoadding] = useState(true)
 
     useEffect( () =>{
-        const cookies = new Cookie()
-        const route = cookies.get("auth_route")
+        const route = JSON.parse(localStorage.getItem("auth_route"))
+        console.log("🚀 ~ file: Routes.jsx:30 ~ useEffect ~ route:", route)
         const VeifyInitRoute = async () => {
             const find_route = await usefindRoute({id_route: route._id, plates_vehicle: null})
             const status_init = find_route.data.status.find(s => s.comment === 'Inicio de ruta')

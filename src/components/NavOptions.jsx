@@ -1,13 +1,11 @@
 import auth from '../routes/auth'
-import Cookie from 'universal-cookie'
 
 import LogutImg from '../img/logout.png'
 
 export default function NavOptions(){
 
     function logout() {
-        const cookies = new Cookie()
-            cookies.remove('auth_route')
+            localStorage.removeItem('auth_route')
             auth.logout(() => {
                 window.location = "/"
             })

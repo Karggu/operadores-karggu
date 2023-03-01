@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import getPickups from "../services/getPickups"
-import Cookies from "universal-cookie"
 import statusPickup from "../services/statusCollection"
 import ImgAdvert from '../img/advertencia.png'
 import { useNavigate } from "react-router-dom"
@@ -15,8 +14,7 @@ export default function RouteCollection(){
  
     useEffect(() => {
         const getPickupsAll = async () => {
-            const cookies = new Cookies()
-            const route = cookies.get("auth_route")
+            const route = JSON.parse(localStorage.getItem("auth_route"))
             setRoute(route)
             console.log('colle');
             const pickups = await getPickups(route.folios)

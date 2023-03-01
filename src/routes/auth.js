@@ -1,9 +1,7 @@
-import Cookie from 'universal-cookie'
 
 class Auth{
     constructor(){
-        const cookies = new Cookie()
-        if(cookies.get('auth_route')){
+        if(localStorage.getItem('auth_route')){
             this.authenticated = true;
         }else{
             this.authenticated = false
@@ -11,8 +9,7 @@ class Auth{
     }
 
     login(cb){
-        const cookies = new Cookie()
-        if(cookies.get('auth_route')){
+        if(localStorage.getItem('auth_route')){
             this.authenticated = true
         }
         cb()

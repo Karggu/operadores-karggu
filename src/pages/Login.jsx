@@ -4,7 +4,6 @@ import LicenseIcon from '../SVG/license.svg'
 import PasswordIcon from '../SVG/password.svg'
 import logoisokarggu from '../SVG/logoisokarggu.svg'
 import auth from '../routes/auth'
-import Cookie from 'universal-cookie'
 import {useNavigate} from 'react-router-dom'
 import loginRoute from '../services/loginRoute'
 
@@ -34,10 +33,7 @@ export default function Login(){
           setNotFoundRoute(true)
           setLoader(false)
       } else {
-          const cookies = new Cookie()
-          cookies.set('auth_route', JSON.stringify(route.data), {path: "/"})
-          console.log("🚀 ~ file: Login.jsx:39 ~ onSubmit ~ route.data:", route.data)
-          console.log("🚀 ~ file: Login.jsx:39 ~ onSubmit ~ route.data:", JSON.stringify(route.data).length)
+          localStorage.setItem('auth_route', JSON.stringify(route.data), {path:"/"})
           auth.login(() => {
             navigate("/route")
           })
